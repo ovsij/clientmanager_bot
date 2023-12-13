@@ -1,94 +1,28 @@
 <!DOCTYPE html>
-<html lang="ru">
 <html>
 <head>
-    <title>WebApp Form</title>
-    <style>
-        /* Стили CSS */
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0; /* Цвет фона страницы */
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 600px; /* Увеличенная ширина формы */
-            background-color: white; /* Цвет заливки формы */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1); /* Тень вокруг формы */
-        }
-
-        input {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-sizing: border-box;
-            font-size: 18px; /* Увеличенный размер шрифта */
-        }
-
-        button {
-            width: 100%;
-            padding: 15px;
-            box-sizing: border-box;
-            font-size: 20px; /* Увеличенный размер шрифта кнопки */
-        }
-    </style>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram WebApp Form</title>
 </head>
 <body>
 
 <form id="myForm">
-    <label for="last_name">Last Name:</label>
-    <input type="text" id="last_name" name="last_name">
-
-    <label for="first_name">First Name:</label>
-    <input type="text" id="first_name" name="first_name">
-
-    <label for="middle_name">Middle Name:</label>
-    <input type="text" id="middle_name" name="middle_name">
-
-    <!-- Увеличенная кнопка "Отправить" -->
-    <button type="button" id="submitButton">Отправить</button>
+    <label for="message">Message:</label><br>
+    <input type="text" id="message" name="message"><br><br>
+    <input type="submit" value="Send">
 </form>
-<script 
-    src="https://telegram.org/js/telegram-web-app.js">
-    let tg = window.Telegram.WebApp;
 
-    tg.expand();
-
-    let btn = document.getElementById('submitButton');
-    btn.addEventListener("click", function(){
-        tg.MainButton.setText('Отправлено!');
-        tg.MainButton.show();
-        tg.sendData("sendTestMessage");
-    });
-</script>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
     const form = document.getElementById('myForm');
-    const submitButton = document.getElementById('submitButton');
 
-    submitButton.addEventListener('click', async function(event) {
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevents the default form submission
+
         const formData = new FormData(form);
-        const authData = Object.fromEntries(formData.entries());
+        const message = formData.get('message');
 
-        const response = await fetch('/submit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: `_auth=${encodeURIComponent(JSON.stringify(authData))}`
-        });
-
-        const result = await response.json();
-        console.log(result);
+        // Отправляем данные на бота через веб-интерфейс Telegram
+        window.Telegram.WebApp.sendData({ message });
     });
 </script>
 
