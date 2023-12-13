@@ -58,7 +58,19 @@
     <!-- Увеличенная кнопка "Отправить" -->
     <button type="button" id="submitButton">Отправить</button>
 </form>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script 
+    src="https://telegram.org/js/telegram-web-app.js">
+    let tg = window.Telegram.WebApp;
+
+    tg.expand();
+
+    let btn = document.getElementById('submitButton');
+    btn.addEventListener("click", function(){
+        tg.MainButton.setText('Отправлено!');
+        tg.MainButton.show();
+        tg.sendData("sendTestMessage");
+    });
+</script>
 <script>
     const form = document.getElementById('myForm');
     const submitButton = document.getElementById('submitButton');
