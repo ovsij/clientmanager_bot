@@ -30,10 +30,10 @@ async def on_startup(dispatcher: Dispatcher):
     from bot import routers
 
     routers.register_all_routes(dispatcher, config)
-    from aiohttp import web
+    """from aiohttp import web
     from bot.routers.clients.webapp import app
     from aiogram.utils.web_app import WebAppInstance
-    WebAppInstance.set_current(app)
+    WebAppInstance.set_current(app)"""
 
 
 
@@ -42,7 +42,6 @@ async def main():
     logging.basicConfig(level=logging.INFO)
     logger.info('Starting Bot')
 
-    session = get_async_session()
     bot = Bot(token=config.bot.token, parse_mode='HTML', disable_web_page_preview=True)
     
 

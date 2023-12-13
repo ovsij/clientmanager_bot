@@ -19,6 +19,8 @@ def register_all_routes(dp: Dispatcher, config: Config) -> None:
     admin_router = Router()
     dp.include_router(master_router)
 
+    clients_router.include_router(clients_commands_router)
+
     master_router.include_router(clients_router)
     master_router.include_router(managers_router)
     master_router.include_router(admin_router)
