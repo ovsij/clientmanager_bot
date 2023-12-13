@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebApp Form</title>
+</head>
+<body>
+
+<form id="myForm">
+    <label for="last_name">Last Name:</label><br>
+    <input type="text" id="last_name" name="last_name"><br>
+    <label for="first_name">First Name:</label><br>
+    <input type="text" id="first_name" name="first_name"><br>
+    <label for="middle_name">Middle Name:</label><br>
+    <input type="text" id="middle_name" name="middle_name"><br>
+</form>
+
+<script>
+    const form = document.getElementById('myForm');
+
+    form.addEventListener('input', async function(event) {
+        const formData = new FormData(form);
+        const authData = Object.fromEntries(formData.entries());
+
+        const response = await fetch('/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `_auth=${encodeURIComponent(JSON.stringify(authData))}`
+        });
+
+        const result = await response.json();
+        console.log(result);  // Можно добавить обработку результата, если нужно
+    });
+</script>
+
+</body>
+</html>
