@@ -132,3 +132,4 @@ dmypy.json
 *.sqlite
 images
 app/config.py
+.DS_Store
