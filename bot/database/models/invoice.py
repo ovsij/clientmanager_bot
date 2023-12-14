@@ -24,3 +24,7 @@ class Invoice(TimestampMixin, Base):
         create_constraint=True,
         validate_strings=True,
     ))
+
+    def __str__(self):
+        name = f'@{self.client.username}' if self.client.username else self.client.tg_id
+        return f"Накладная №{id} ({name})"

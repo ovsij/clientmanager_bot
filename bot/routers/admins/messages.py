@@ -6,11 +6,11 @@ from aiogram.enums.parse_mode import ParseMode
 from bot.database.database import *
 from bot.keyboards import *
 from bot.keyboards.keyboard_constructor import InlineConstructor
-from bot.utils.states import Form
+from bot.utils.states import SendMessage
 
 admin_messages_router = Router()
 
-@admin_messages_router.message(Form.sending)
+@admin_messages_router.message(SendMessage.sending)
 async def get_sending(message: Message, state: FSMContext):
     text = message.text
     await state.update_data(text=text)

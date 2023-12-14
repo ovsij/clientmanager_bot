@@ -33,7 +33,6 @@ class DbSessionMiddleware(BaseMiddleware):
         # register user if not exists
         if not user:
             manager = await UserDAO.get_free_manager()
-            print(manager)
             if tg_user.id in config.bot.admin_ids:
                 user = await UserDAO.add_one(
                     **{'tg_id': str(tg_user.id), 

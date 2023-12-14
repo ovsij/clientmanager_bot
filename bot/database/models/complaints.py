@@ -1,6 +1,6 @@
 
 
-from sqlalchemy import ForeignKey
+from sqlalchemy import ARRAY, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
@@ -19,4 +19,7 @@ class Complaint(TimestampMixin, Base):
     email: Mapped[str]
     situation_description: Mapped[str]
     required_amount: Mapped[str]
-    photo_scan: Mapped[str]
+    photo_scan = mapped_column(ARRAY(String))
+
+    def __str__(self):
+        return f"Жалоба №{self.id} ({self.email})"

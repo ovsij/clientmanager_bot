@@ -3,7 +3,7 @@ from aiogram.fsm.context import FSMContext
 
 from bot.database.database import *
 from bot.keyboards import *
-from bot.utils.states import Form
+from bot.utils.states import SendMessage
 
 
 admin_callbacks_router = Router()

@@ -34,3 +34,8 @@ class UserDAO(BaseDAO):
                 return manager
             return None
 
+    @classmethod
+    async def get_clients_manager(cls, client_tg_id : str):
+        client = await super().get_one_or_none(tg_id=client_tg_id)
+        manager = await super().get_by_id(model_id=client.manager_id)
+        return client, manager

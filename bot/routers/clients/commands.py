@@ -1,14 +1,37 @@
 from aiogram import Router
 from aiogram.filters import Command
+from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
+from bot.keyboards.inline import *
 
-from bot.keyboards.keyboard_constructor import InlineConstructor
 
 clients_commands_router = Router()
 
 @clients_commands_router.message(Command(commands=["start"]))
-async def add_command(message: Message):
-    
-    text_and_data = [['Открыть веб-приложение', 'https://ovsij.github.io/clientmanager_bot/bot/invoice_form.html']]
-    reply_markup = InlineConstructor.create_kb(text_and_data, button_type=['web_app'])
-    await message.answer("Чтобы добавить пользователя, нажмите кнопку ниже", reply_markup=reply_markup)
+async def cmd_start(message: Message, state: FSMContext):
+    await state.clear()
+    text = inline_kb_welcome(first_name=message.from_user.first_name)
+    await message.answer(text=text)
+    await message.delete()
+
+@clients_commands_router.message(Command(commands=["invoice"]))
+async def cmd_invoice(message: Message, state: FSMContext):
+    await state.clear()
+    text, reply_markup = inline_kb_invoice()
+    await message.answer(text=text, reply_markup=reply_markup)
+    await message.delete()
+
+@clients_commands_router.message(Command(commands=["complaint"]))
+async def cmd_invoice(message: Message, state: FSMContext):
+    await state.clear()
+    text, reply_markup = inline_kb_complaint()
+    await message.answer(text=text, reply_markup=reply_markup)
+    await message.delete()
+
+@clients_commands_router.message(Command(commands=["manager"]))
+async def cmd_invoice(message: Message, state: FSMContext):
+    await state.clear()
+    text, reply_markup = inline_kb_manager()
+    await message.answer(text=text, reply_markup=reply_markup)
+    await message.delete()
+

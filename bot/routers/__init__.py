@@ -20,6 +20,8 @@ def register_all_routes(dp: Dispatcher, config: Config) -> None:
     dp.include_router(master_router)
 
     clients_router.include_router(clients_commands_router)
+    clients_router.include_router(clients_callbacks_router)
+    clients_router.include_router(clients_messages_router)
 
     master_router.include_router(clients_router)
     master_router.include_router(managers_router)
