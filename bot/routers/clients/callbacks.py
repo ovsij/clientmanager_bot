@@ -1,5 +1,6 @@
 from aiogram import Bot, F, Router, types
 from aiogram.fsm.context import FSMContext
+from bot.database.dao.chat import ChatDAO
 
 from bot.database.dao.complaints import ComplaintDAO
 from bot.database.dao.invoices import InvoiceDAO
@@ -79,3 +80,14 @@ async def callback_query_handler(
 
         await ComplaintDAO.add_one(tg_id=tg_id, data=data)
         await state.clear()
+
+    """Managers callbacks. Move it from here!!!"""
+    if code.startswith("managerclient"):
+        client_id = int(code.split("_")[-1])
+        # client = await UserDAO.get_by_id(model_id=client_id)
+        chat = await ChatDAO.update(
+            client_id=client_id, manager_tg_id=tg_id, is_open=True
+        )
+        await callback_query.message.answer(
+            "Диалог с клиентом открыт. Закрыть все диалоги - /close"
+        )

@@ -127,6 +127,6 @@ async def inline_kb_myclients(clients):
     text_and_data = []
     for id in clients:
         client = await UserDAO.get_by_id(model_id=id)
-        text_and_data.append([f"Клиент №{client.id}", f"client_{client.id}"])
+        text_and_data.append([f"Клиент №{client.id}", f"managerclient_{client.id}"])
     reply_markup = InlineConstructor.create_kb(text_and_data)
     return text, reply_markup

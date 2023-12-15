@@ -5,8 +5,8 @@ from bot.database.dao.chat import ChatDAO
 
 managers_callbacks_router = Router()
 
-
-@managers_callbacks_router.callback_query()
+"""
+@managers_callbacks_router.callback_query(F.callback_query.data.startswith('manager'))
 async def callback_query_handler(
     callback_query: types.CallbackQuery, state: FSMContext, bot: Bot
 ):
@@ -14,7 +14,7 @@ async def callback_query_handler(
     tg_id = str(callback_query.from_user.id)
     print(f"manager {callback_query.from_user.username}[{tg_id}]: {code}")
 
-    if code.startswith("client"):
+    if code.startswith("managerclient"):
         client_id = int(code.split("_")[-1])
         # client = await UserDAO.get_by_id(model_id=client_id)
         chat = await ChatDAO.update(
@@ -22,4 +22,4 @@ async def callback_query_handler(
         )
         await callback_query.message.answer(
             "Диалог с клиентом открыт. Закрыть все диалоги - /close"
-        )
+        )"""
