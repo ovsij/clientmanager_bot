@@ -1,4 +1,5 @@
 import asyncio
+
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -17,8 +18,8 @@ class UserDAO(BaseDAO):
         """
         async with async_session_maker() as session:
             subquery = (
-                select(User.manager_id, func.count(User.id).label('client_count'))
-                .where(User.is_manager == False)
+                select(User.manager_id, func.count(User.id).label("client_count"))
+                .where(User.is_manager == True)
                 .group_by(User.manager_id)
                 .alias("subquery")
             )
@@ -35,7 +36,7 @@ class UserDAO(BaseDAO):
             return None
 
     @classmethod
-    async def get_clients_manager(cls, client_tg_id : str):
+    async def get_clients_manager(cls, client_tg_id: str):
         client = await super().get_one_or_none(tg_id=client_tg_id)
         manager = await super().get_by_id(model_id=client.manager_id)
         return client, manager

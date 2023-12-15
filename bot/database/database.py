@@ -1,4 +1,5 @@
 import re
+
 from sqlalchemy import Column, DateTime, func
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import (Mapped, declarative_base, declared_attr,
@@ -24,16 +25,12 @@ class CustomBase:
 
 Base = declarative_base(cls=CustomBase)
 
-    
-host = 'localhost' if get_local_ip() == config.postgres.host else config.postgres.host
-DB_URL = f'postgresql+asyncpg://{config.postgres.user}:{config.postgres.password}@{host}:{config.postgres.port}/{config.postgres.database}'
+
+host = "localhost" if get_local_ip() == config.postgres.host else config.postgres.host
+DB_URL = f"postgresql+asyncpg://{config.postgres.user}:{config.postgres.password}@{host}:{config.postgres.port}/{config.postgres.database}"
 engine = create_async_engine(DB_URL)
 
-async_session_maker = sessionmaker(
-    engine,
-    class_=AsyncSession,
-    expire_on_commit=False
-)
+async_session_maker = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 
 async def get_async_session():
@@ -42,7 +39,8 @@ async def get_async_session():
 
 
 class TimestampMixin:
-    
+
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
-    
+    updated_at = Column(
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
+    )

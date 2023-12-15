@@ -1,14 +1,14 @@
-from aiogram import Dispatcher, Router, F
+from aiogram import Dispatcher, F, Router
 
 from bot.config import Config
-from bot.routers.admins.commands import admin_commands_router
 from bot.routers.admins.callbacks import admin_callbacks_router
+from bot.routers.admins.commands import admin_commands_router
 from bot.routers.admins.messages import admin_messages_router
-from bot.routers.clients.commands import clients_commands_router
 from bot.routers.clients.callbacks import clients_callbacks_router
+from bot.routers.clients.commands import clients_commands_router
 from bot.routers.clients.messages import clients_messages_router
-from bot.routers.managers.commands import managers_commands_router
 from bot.routers.managers.callbacks import managers_callbacks_router
+from bot.routers.managers.commands import managers_commands_router
 from bot.routers.managers.messages import managers_messages_router
 
 
@@ -19,14 +19,16 @@ def register_all_routes(dp: Dispatcher, config: Config) -> None:
     admin_router = Router()
     dp.include_router(master_router)
 
+    managers_router.include_router(managers_commands_router)
+    managers_router.include_router(managers_callbacks_router)
+    managers_router.include_router(managers_messages_router)
     clients_router.include_router(clients_commands_router)
     clients_router.include_router(clients_callbacks_router)
     clients_router.include_router(clients_messages_router)
 
-    master_router.include_router(clients_router)
     master_router.include_router(managers_router)
+    master_router.include_router(clients_router)
     master_router.include_router(admin_router)
-    
 
     """user_router.message.filter(F.chat.type.in_(['private']))
     user_router.callback_query.filter(F.message.chat.type.in_(['private']))

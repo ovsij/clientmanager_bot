@@ -1,5 +1,5 @@
 from .database import Base
-
-from .models.users import User
+from .models.chat import Chat
 from .models.complaints import Complaint
-from .models.invoice import Invoice
+from .models.invoices import Invoice
+from .models.users import User

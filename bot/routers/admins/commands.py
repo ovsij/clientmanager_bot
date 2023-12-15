@@ -1,8 +1,8 @@
-from aiogram.types import Message
 from aiogram import Router
+from aiogram.enums.parse_mode import ParseMode
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
-from aiogram.enums.parse_mode import ParseMode
+from aiogram.types import Message
 
 from bot.database.database import *
 from bot.keyboards import *

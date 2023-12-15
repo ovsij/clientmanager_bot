@@ -1,9 +1,9 @@
-from datetime import datetime
 import logging
-from typing import Callable, Awaitable, Dict, Any, Union
+from datetime import datetime
+from typing import Any, Awaitable, Callable, Dict, Union
 
 from aiogram import BaseMiddleware, Bot, types
-from aiogram.types import Update, CallbackQuery, Message
+from aiogram.types import CallbackQuery, Message, Update
 
 from bot.config import config
 from bot.database.dao.users import UserDAO
@@ -16,12 +16,12 @@ class DbSessionMiddleware(BaseMiddleware):
         super().__init__()
         self.bot = bot
 
-    
-    async def __call__(self,
-                       handler: Callable[[Update, Dict[str, Any]], Awaitable[Any]],
-                       event: Union[Message, CallbackQuery],
-                       data: Dict[str, Any],
-                       ) -> Any:
+    async def __call__(
+        self,
+        handler: Callable[[Update, Dict[str, Any]], Awaitable[Any]],
+        event: Union[Message, CallbackQuery],
+        data: Dict[str, Any],
+    ) -> Any:
         msg_text = None
         if event.message:
             tg_user: types.User = event.message.from_user
@@ -35,22 +35,24 @@ class DbSessionMiddleware(BaseMiddleware):
             manager = await UserDAO.get_free_manager()
             if tg_user.id in config.bot.admin_ids:
                 user = await UserDAO.add_one(
-                    **{'tg_id': str(tg_user.id), 
-                     'username': tg_user.username,
-                     'first_name': tg_user.first_name,
-                     'last_name': tg_user.last_name,
-                     'is_admin': True,
-                     'is_manager': True
-                     }
+                    **{
+                        "tg_id": str(tg_user.id),
+                        "username": tg_user.username,
+                        "first_name": tg_user.first_name,
+                        "last_name": tg_user.last_name,
+                        "is_admin": True,
+                        "is_manager": True,
+                    }
                 )
             else:
                 user = await UserDAO.add_one(
-                    **{'tg_id': str(tg_user.id), 
-                     'username': tg_user.username,
-                     'first_name': tg_user.first_name,
-                     'last_name': tg_user.last_name,
-                     'manager_id': manager.id
-                     }
+                    **{
+                        "tg_id": str(tg_user.id),
+                        "username": tg_user.username,
+                        "first_name": tg_user.first_name,
+                        "last_name": tg_user.last_name,
+                        "manager_id": manager.id,
+                    }
                 )
             logging.info(f"new user {tg_user.id} ({tg_user.full_name}) in db")
             await set_commands(self.bot)
@@ -70,5 +72,5 @@ class DbSessionMiddleware(BaseMiddleware):
                 pass
         except:
             pass"""
-            
+
         return await handler(event, data)

@@ -133,3 +133,4 @@ dmypy.json
 images
 app/config.py
 .DS_Store
+bot/database/photos/*

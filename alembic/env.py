@@ -6,7 +6,6 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
-
 from bot.config import config as bot_config
 from bot.database import Base
 from bot.utils.utils import get_local_ip
@@ -14,8 +13,15 @@ from bot.utils.utils import get_local_ip
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-host = 'localhost' if get_local_ip() == bot_config.postgres.host else bot_config.postgres.host
-config.set_main_option('sqlalchemy.url', f'postgresql+asyncpg://{bot_config.postgres.user}:{bot_config.postgres.password}@{host}:{bot_config.postgres.port}/{bot_config.postgres.database}')
+host = (
+    "localhost"
+    if get_local_ip() == bot_config.postgres.host
+    else bot_config.postgres.host
+)
+config.set_main_option(
+    "sqlalchemy.url",
+    f"postgresql+asyncpg://{bot_config.postgres.user}:{bot_config.postgres.password}@{host}:{bot_config.postgres.port}/{bot_config.postgres.database}",
+)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

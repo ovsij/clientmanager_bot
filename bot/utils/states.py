@@ -1,7 +1,9 @@
 from aiogram.fsm.state import State, StatesGroup
 
+
 class SendMessage(StatesGroup):
     sending = State()
+
 
 class InvoiceForm(StatesGroup):
     description = State()
@@ -11,10 +13,10 @@ class InvoiceForm(StatesGroup):
     delivery_address = State()
     payment_method = State()
 
+
 class ComplaintForm(StatesGroup):
     invoice_id = State()
     email = State()
     situation_description = State()
     required_amount = State()
     photo_scan = State()
-    
