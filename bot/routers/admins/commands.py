@@ -12,5 +12,4 @@ admin_commands_router = Router()
 
 @admin_commands_router.message(Command("admin"))
 async def cmd_admin(message: Message):
-    text, reply_markup = inline_kb_admin(db_request)
-    await message.answer(text=text, reply_markup=reply_markup)
+    pass
