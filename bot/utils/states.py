@@ -14,7 +14,7 @@ class InvoiceForm(StatesGroup):
     payment_method = State()
 
 
-class ComplaintForm(StatesGroup):
+class ClaimForm(StatesGroup):
     invoice_id = State()
     email = State()
     situation_description = State()

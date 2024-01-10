@@ -8,8 +8,4 @@ class InvoiceDAO(BaseDAO):
 
     @classmethod
     async def add_one(cls, tg_id: str, data):
-        client = await UserDAO.get_one_or_none(tg_id=tg_id)
-        if client:
-            data["client_id"] = client.id
-        invoice = await super().add_one(**data)
-        return invoice
+        pass
